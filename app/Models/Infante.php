@@ -17,7 +17,7 @@ class Infante extends Model
         'edad',
         'sexo',
         'fechaNacimiento',
-        'image',
+        'foto',
         'sala',
         'nombreMadre',
         'nombrePadre',

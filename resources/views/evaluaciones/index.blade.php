@@ -71,7 +71,6 @@
                                         <th style="display: none">ID</th>
                                         <th style="color: #fff">Estudiante</th>
                                         <th style="color: #fff">Fecha de Evaluación</th>
-                                        <th style="color: #fff">Total</th>
                                         <th style="color: #fff">Acciones</th>
                                     </tr>
                                 </thead>
@@ -83,7 +82,6 @@
                                             <td>{{ $evaluacion->infante->nombre }}
                                                 {{ $evaluacion->infante->apellidoPaterno }}</td>
                                             <td>{{ $evaluacion->fecha }}</td>
-                                            <td>{{ $evaluacion->total }}</td>
                                             <td>
                                                 <a class="btn btn-secondary"
                                                     href="{{ route('evaluaciones.show', $evaluacion->id) }}">Ver</a>
@@ -98,8 +96,6 @@
                                                     {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
                                                     {!! Form::close() !!}
                                                 @endcan
-
-
 
                                                 @php
                                                     $paccion = DB::table('p_accions')

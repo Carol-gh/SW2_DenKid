@@ -18,6 +18,8 @@ use App\Models\Evaluacion_Estado;
 use App\Models\ResultadoDenver;
 use Carbon\Carbon;
 use App\Models\Pregunta;
+use App\Models\Rol;
+
 
 
 class HomeController extends Controller
@@ -39,12 +41,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $rol = DB::table('model_has_roles')->where('model_id', auth()->user()->id)->get()->first();
-        $rolP = DB::table('roles')->where('name', 'Padre')->get()->first();
-        $infante = DB::table('infante')->where('userId', auth()->user()->id)->get()->first();
-        if ($rol->role_id == $rolP->id) {
-            $evaluacion = DB::table('evaluaciondenver')->where('infanteId', $infante->id)->orderBy('created_at', 'desc')->first();
-            $personal = DB::table('personal')->where('id',  $evaluacion->personalId)->get()->first();
+    $user = auth()->user();
+   # Auth::logout();
+    if (!$user) {
+        return view('home');
+    }
+
+    $rol = DB::table('model_has_roles')->where('model_id', auth()->user()->id)->get()->first();
+    $rolP = DB::table('roles')->where('name', 'Padre')->get()->first();
+    $infante = Infante::where('userId', $user->id)->first();
+
+    if ($rol && $rolP && $infante) {
+        $evaluacion = EvaluacionDenver::where('infanteId', $infante->id)->orderBy('created_at', 'desc')->first();
+        $personal = DB::table('personal')->where('id',  $evaluacion->personalId)->get()->first();
 
         $result = ResultadoDenver::where('evaluacionId',$evaluacion->id)->where('denverescalaId', 2)->get();
         $MG = Pregunta::whereIn('id', $result->pluck('preguntaId'))
@@ -75,12 +84,9 @@ class HomeController extends Controller
             $data[$emocion] = $evaluacionesEstado;
         }        
             return view('evaluaciones.resultados', compact('evaluacion','personal','infante','data'),compact('MG','MF','AL','PS','totalFilas'));
-        } else {
-            return view('home');
-
-        }
-
-
+    } else {
+        return view('home');
+    }
     }
 }
 

@@ -41,6 +41,8 @@ class PermissionSeeder extends Seeder
         Permission::Create(['name' => 'crear-infante'])->syncRoles([$role0, $role1]);
         Permission::Create(['name' => 'editar-infante'])->syncRoles([$role0, $role1, $role2]);
         Permission::Create(['name' => 'borrar-infante'])->syncRoles([$role0, $role1]);
+        Permission::Create(['name' => 'evaluar-infante'])->syncRoles([$role3, $role4]);
+        Permission::Create(['name' => 'seguimiento-infante'])->syncRoles([$role1, $role5, $role6]);
 
         //evaluacion
         Permission::Create(['name' => 'ver-evaluacion'])->syncRoles([$role1, $role2, $role4,$role5,$role6]);

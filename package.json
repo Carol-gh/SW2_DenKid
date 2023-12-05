@@ -23,6 +23,8 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@aws-sdk/client-rekognition": "^3.465.0",
+        "@aws-sdk/credential-provider-ini": "^3.465.0",
         "chart.js": "^4.3.0"
     }
 }

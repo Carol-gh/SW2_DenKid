@@ -56,16 +56,22 @@
                                             {!! Form::text('ci', null, array('class'=>'form-control')) !!}
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                   <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
                                             <label for="">Cargo</label>
-                                            {!! Form::select('roles[]', $roles, [], ['class' => 'form-control']) !!}
+                                            {!! Form::select('rol', $roles, null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             {!! Form::text('email', null, array('class'=>'form-control')) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="password">Contraseña</label>
+                                            {!! Form::password('password', ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-12">

@@ -8,7 +8,7 @@ use App\Http\Controllers\SeguimientoController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\PlanAccionController;
-
+use App\Models\Evaluacion;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,13 +41,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/preguntas/{areaId}/{evaluacionId}', [App\Http\Controllers\PreguntasController::class, 'getItem'])->name('preguntas');
     Route::post('/guardar_respuestas/{evaluacionId}', [App\Http\Controllers\PreguntasController::class, 'respuestas'])->name('guardar_respuestas');
 
-     Route::resource('planAccion',PlanAccionController ::class)->names('planAccion');
+    Route::resource('planAccion', PlanAccionController::class)->names('planAccion');
     Route::get('/PAccion/{id}', [App\Http\Controllers\PlanAccionController::class, 'crear'])->name('PAccion');
     Route::get('/Seguimiento/{id}', [App\Http\Controllers\SeguimientoController::class, 'crear'])->name('seguimiento.crear');
-    Route::resource('seguimiento',SeguimientoController ::class)->names('seguimiento');
-    Route::post('/process-image', 'App\Http\Controllers\ImageController@processImage')->name('process.image');
-
+    Route::resource('seguimiento', SeguimientoController::class)->names('seguimiento');
+    Route::get('/api/infantes/{infanteId}', [InfanteController::class, 'getInfanteInfo']);
+    Route::get('/eliminar_evaluacion/{evaluacionId}', [EvaluacionController::class, 'eliminarEvaluacion'])->name('eliminar_evaluacion');
 });
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

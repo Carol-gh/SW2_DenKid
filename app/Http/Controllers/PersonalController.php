@@ -42,7 +42,7 @@ class PersonalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -50,25 +50,25 @@ class PersonalController extends Controller
             'direccion' => 'required|string',
             'telefono' => 'required|string',
             'ci' => 'required|string',
+            'password' => 'required|min:6',
         ]);
 
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('12345'));
+        $user->password = bcrypt($request->input('password'));
         $user->save();
-
-        $user->assignRole($request->input('roles'));
 
         $personal = new Personal();
         $personal->nombre = $request->input('nombre');
         $personal->direccion = $request->input('direccion');
         $personal->telefono = $request->input('telefono');
         $personal->ci = $request->input('ci');
-        //$personal->cargo = $request->input('roles');
+        $personal->cargo = $request->input('rol');
         $personal->userId = $user->id;
+        $personal->sala='3'; 
         $personal->save();
-
+        $user->assignRole($request->input('rol'));
         return redirect()->route('personal.index');
     }
 
@@ -115,7 +115,7 @@ class PersonalController extends Controller
         $user->update($input);
 
         DB::table('model_has_roles')->where('model_id',$personal->userId)->delete();
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($request->input('rol'));
 
         /*$personal = Personal::where('userId', $user->id)->first();
         $personal = Personal::find($personal->id);

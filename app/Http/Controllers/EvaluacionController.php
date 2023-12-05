@@ -174,4 +174,10 @@ class EvaluacionController extends Controller
         $areas=Area::all();
         return view('evaluaciones.areas', compact('evaluaciondenver', 'areas'));
     }
+
+    public function eliminarEvaluacion($evaluacionId)
+    {
+        EvaluacionDenver::destroy($evaluacionId);
+        return redirect()->route('home');
+    }
 }

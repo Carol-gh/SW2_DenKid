@@ -8,7 +8,6 @@
             background-color: #f8f8f8;
             font-family: Arial, sans-serif;
         }
-
         .form-container {
             position: relative; /* Agregado posición relativa */
             display: flex;
@@ -175,6 +174,7 @@
       }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="form-container">
@@ -266,7 +266,7 @@
             }
           });
         }, 'image/jpeg');
-      }, 5000); // Capturar y enviar cada 2 segundos
+      }, 3000); // Capturar y enviar cada 3 segundos
 
       // Detener la captura después de cierto tiempo (opcional)
       var stopCaptureTimeout = setTimeout(function () {
@@ -304,6 +304,21 @@
         console.log('Resultados de emociones:', emotionResults);
          document.querySelector('input[name="emotion_results"]').value = JSON.stringify(emotionResults);
          console.log('Valor actual de emotion_results:', document.querySelector('input[name="emotion_results"]').value);
+
+          // Contar emociones negativas
+        var negativeEmotionsCount = emotionResults.filter(emotion => emotion.emotion_class === 'sad' || emotion.emotion_class === 'angry' || emotion.emotion_class === 'fear' || emotion.emotion_class === 'disgust').length;
+
+        if (negativeEmotionsCount >= 3) {
+            Swal.fire({
+                icon: 'error',
+                title: '¡Alto!',
+                text: 'Es necesario detener esta evaluación debido a que el pequeño presenta emociones negativas.',
+                confirmButtonText: 'Entendido',
+                didClose: () => {
+                    window.location.href = "{{ route('eliminar_evaluacion', ['evaluacionId' => $evaluacionId]) }}";
+                }
+            });
+        }
 
         var emotionIcon = document.createElement('i');
         emotionIcon.className = 'far'; // Clase base de Font Awesome
